@@ -1,0 +1,38 @@
+
+1. Find the books which don’t have the word ‘happy’ in the names
+
+	SELECT * 
+	FROM Books 
+	WHERE Name NOT LIKE '%happy%';
+
+2. Delete all the data (approx. 5 million) in the Books table
+
+	TRUNCATE BOOKS;
+
+3. Find all the authors who are not winners – please provide 3 different ways and state which one is the best
+
+	i. SELECT a.*
+		FROM Author a
+		LEFT JOIN Winners w ON a.Id = w.WinnerAuthorId
+		WHERE w.WinnerAuthorId IS NULL;
+		
+	ii. SELECT a.*
+			FROM Author a
+			LEFT JOIN Winners w ON a.Id = w.WinnerAuthorId
+			WHERE w.WinnerAuthorId IS NULL;
+			
+	iii. SELECT *
+			FROM Author a
+			WHERE NOT EXISTS (
+				SELECT 1
+				FROM Winners w
+				WHERE a.Id = w.WinnerAuthorId
+			);
+
+4. Which one is the best?
+
+	The performance of these queries can depend on the database system and the size of the tables. However, typically
+	'NOT EXISTS' (3rd one) is often preferred for its readability and efficiency with indexed columns.
+
+		
+		
